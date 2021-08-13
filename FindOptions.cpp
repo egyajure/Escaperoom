@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include "Square.cpp" 
+#include "FindOptions.h"
 //(fourth made)
 
 //goal: to take the vector created (not a reference this time just a copy, do not need to edit the vector) and take in the current location of
@@ -12,14 +10,18 @@
 //inputs- vector, current location
 //output- location in vector where square is
 
-int findOptions (std::vector<Square> v, int X, int Y , bool &optionFound){
-    int goal = X * Y;
+int findOptions(std::vector<Square> v, int X, int Y, bool &optionFound, Square s)
+{
+    //before goal was x * Y, only wokred for first 'move'
+    int goal = s.xCoordinate * s.yCoordinate;
     float I = 0;
     optionFound = false;
 
-    for (int i = 0; i < v.size(); i++){
+    for (int i = 0; i < v.size(); i++)
+    {
         Square o = v[i];
-        if (o.value == goal){
+        if (o.value == goal)
+        {
             I = i;
             optionFound = true;
         }
