@@ -3,7 +3,6 @@
 #include "GatherData.h"
 //(third made)
 
-//this is an edit
 //moved stuff from 'lastLocation' here
 int count;
 std::vector<Square> moves;
@@ -45,10 +44,7 @@ void endCheck(Square &f, std::string &output, int X, int Y, bool &end, bool opti
         end = true;
         std::cout << "done \n";
     }
-    else
-    {
-        end = false;
-    }
+    
 }
 
 //stuff from findOptions here
@@ -62,13 +58,21 @@ int findOptions(std::vector<Square> v, int X, int Y, bool &optionFound, Square s
     for (int i = 0; i < v.size(); i++)
     {
         Square o = v[i];
-        if (o.value == goal)
+        if (o.value == goal /*new*/ && o.beenSeen == false)
         {
             I = i;
             optionFound = true;
         }
     }
     return I;
+}
+
+//*new* function to mark spot in vector as visited
+
+void markVisited (std::vector<Square> &vect, int spot){
+    Square a = vect[spot];
+    a.beenSeen = true;
+    vect[spot] = a;
 }
 
 int main()
@@ -98,6 +102,9 @@ int main()
     */
 
     Square f = vect[Y * X - 1]; //creating a special object, f, which will be the 'travelling' object
+    //*new* marking the travelling object as seen before
+    f.beenSeen = true;
+
     bool optionFound = false;   // creating a bool that will be modified in the 'findoptions module'
 
     bool end = false;
@@ -128,7 +135,7 @@ int main()
     //now that set up is done ^ the loop below will run until the program ends
     //different from the loop in a loop I am avoiding because this loop does not have a set amount
 
-    std::cout << "starting endCheck = " << endCheck << "\n";
+    
 
     while (end == false)
     {
@@ -141,6 +148,9 @@ int main()
 
             //the object then 'travels' to the found option
             f = vect[option];
+
+            //*new* current option is now marked as visited
+            markVisited (vect, option);
 
             //for keeping track of where the program is at
             std::cout << "new coordinate = " << f.xCoordinate << ", " << f.yCoordinate << "\n";
@@ -158,12 +168,13 @@ int main()
 
         //at the end of each loop, the code will check to see if it is done
         endCheck(f, output, X, Y, end, optionFound);
-        std::cout << "endCheck = " << endCheck << "\n";
+        std::cout << "endCheck = " << end << "\n";
     }
     std::cout << "end of loop reached\n\n";
 
     std::cout << output;
 
+    std::cout<< "\npath: ";
     for (int i = 0; i < moves.size(); i++)
     {
         std::cout << moves[i].value;
