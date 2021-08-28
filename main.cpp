@@ -3,6 +3,7 @@
 #include "GatherData.h"
 //(third made)
 
+//this is an edit
 //moved stuff from 'lastLocation' here
 int count;
 std::vector<Square> moves;
