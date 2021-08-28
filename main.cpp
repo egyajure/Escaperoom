@@ -3,6 +3,62 @@
 #include "GatherData.h"
 //(third made)
 
+//moving 'Square' struct here
+struct Square
+{
+    int value;
+    int xCoordinate;
+    int yCoordinate;
+    bool beenSeen = false;
+
+    Square(int a);
+    void addCoordinate(int x, int y);
+};
+
+Square::Square(int a) : value{a}{
+    //contructor, intentionally empty
+}
+
+void Square::addCoordinate(int x, int y)
+{
+    xCoordinate = x;
+    yCoordinate = y;
+}
+
+//moved stuff from 'Gatherdata' here
+void gatherData(std::vector<Square> &vect, int x, int y)
+{ //creates a reference to the vector "vect" which holds Squares
+    int xCoordinate = 1;
+    int yCoordinate = 1;
+
+    for (int i = 0; i < x * y; i++)
+    { //looping through each value
+
+        int value = 0;
+
+        //gathering input for value, and making an object
+        std::cin >> value;
+        Square o(value);
+
+        //code for adding coordinates to the vector
+        o.addCoordinate(xCoordinate, yCoordinate);
+
+        //adding the object to the vector
+        vect.push_back(o);
+
+        //what controls the 'looping' of x and y coordinates
+        if (xCoordinate == x)
+        {
+            xCoordinate = 1;
+            yCoordinate = yCoordinate + 1;
+        }
+        else
+        {
+            xCoordinate++;
+        }
+    }
+}
+
 //moved stuff from 'lastLocation' here
 int count;
 std::vector<Square> moves;
@@ -35,14 +91,14 @@ void endCheck(Square &f, std::string &output, int X, int Y, bool &end, bool opti
     {
         output = "yes";
         end = true;
-        std::cout << "done \n";
+        //std::cout << "done \n";
     }
     //checking if the code is stuck where it started. indicating escape is not possible
     if (f.xCoordinate == X && f.yCoordinate == Y && optionFound == false)
     {
         output = "no";
         end = true;
-        std::cout << "done \n";
+        //std::cout << "done \n";
     }
     
 }
@@ -90,16 +146,6 @@ int main()
     //running the modeule 'gatherData' to fill the vector created with values and coordinates
     gatherData(vect, X, Y);
 
-    //test, printing out the contents of vect after gatherData runs to see if it worked
-    /*
-    for (int i = 0; i < vect.size(); i++)
-    {
-        Square o = vect[i]; //gives access to vect[i]
-
-        std::cout << "coordinate: " << o.xCoordinate << ", " << o.yCoordinate << "\n";
-        std::cout << "value: " << o.value << "\n";
-    }
-    */
 
     Square f = vect[Y * X - 1]; //creating a special object, f, which will be the 'travelling' object
     //*new* marking the travelling object as seen before
@@ -111,31 +157,6 @@ int main()
     float option = 0.5;
     std::string output = " ";
 
-    //test for FindOprions.cpp
-    /*
-    std::cout << "pre-findOptions, optionFound = " << optionFound << "\n";
-    option = findOptions(vect, X, Y, optionFound, f);
-    std::cout << "post-findOptions, optionFound = " << optionFound << "\n";
-    std::cout << "option located is equal to "
-              << "vect[" << option << "] \n";
-
-    //printing original coordinates
-    std::cout << "original coordinate = " << f.xCoordinate << ", " << f.yCoordinate << "\n";
-    std::cout << "original value = " << f.value << "\n";
-
-    //'moving' f
-    f = vect[option];
-
-    //printing new coordinate
-    std::cout << "new coordinate = " << f.xCoordinate << ", " << f.yCoordinate << "\n";
-    std::cout << "new value = " << f.value << "\n";
-    */
-    //the above test confirmed that f can successfully move to a found option
-
-    //now that set up is done ^ the loop below will run until the program ends
-    //different from the loop in a loop I am avoiding because this loop does not have a set amount
-
-    
 
     while (end == false)
     {
@@ -153,14 +174,14 @@ int main()
             markVisited (vect, option);
 
             //for keeping track of where the program is at
-            std::cout << "new coordinate = " << f.xCoordinate << ", " << f.yCoordinate << "\n";
-            std::cout << "new value = " << f.value << "\n";
+            //std::cout << "new coordinate = " << f.xCoordinate << ", " << f.yCoordinate << "\n";
+            //std::cout << "new value = " << f.value << "\n";
         }
 
         //if no option is found, code will change the current value as to not come back, then move backwards
         else
         {
-            std::cout << "no option found \n";
+            //std::cout << "no option found \n";
 
             //changes the vector at this location to make the value 0, goes back a step
             goBack(vect, f, option);
@@ -168,15 +189,15 @@ int main()
 
         //at the end of each loop, the code will check to see if it is done
         endCheck(f, output, X, Y, end, optionFound);
-        std::cout << "endCheck = " << end << "\n";
+        //std::cout << "endCheck = " << end << "\n";
     }
-    std::cout << "end of loop reached\n\n";
+    //std::cout << "end of loop reached\n\n";
 
     std::cout << output;
 
-    std::cout<< "\npath: ";
+    /*std::cout<< "\npath: ";
     for (int i = 0; i < moves.size(); i++)
     {
         std::cout << moves[i].value;
-    }
+    }*/
 }

@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 struct Square
@@ -10,3 +11,4 @@ struct Square
     Square(int a);
     void addCoordinate(int x, int y);
 };
+*/

@@ -1,3 +1,4 @@
+/*
 #include "Square.h"
 //(created first)
 //goal: create a class so it's objects can be included in a vector created in the gatherdata module
@@ -12,3 +13,4 @@ void Square::addCoordinate(int x, int y)
     xCoordinate = x;
     yCoordinate = y;
 }
+*/

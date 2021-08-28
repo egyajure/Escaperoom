@@ -1,4 +1,4 @@
-
+/*
 #include "GatherData.h"
 #include <iostream>
 //(created second)
@@ -37,3 +37,4 @@ void gatherData(std::vector<Square> &vect, int x, int y)
         }
     }
 }
+*/
