@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include "GatherData.h"
 //(third made)
 
 //moving 'Square' struct here
